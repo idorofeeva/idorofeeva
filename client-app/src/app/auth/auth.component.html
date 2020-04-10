@@ -1,0 +1,85 @@
+<button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+<div id="id01" class="modal">
+  <form class="modal-content animate">
+    <div class="imgcontainer">
+      <span (click)="clearInput()" onclick="document.getElementById('id01').style.display='none'" class="close" title="Close">&times;</span>
+    </div>
+
+    <div class="container">
+      <label for="email"><b>Email</b></label>
+      <input type="text" autocomplete="off" placeholder="Enter Email" name="uname" [(ngModel)]="user.email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" autocomplete="off" placeholder="Enter Password" name="psw" [(ngModel)]="user.password" required>
+
+      
+      <div *ngIf="user.email == '' || user.password == '';else buttonOk">
+        <button type="submit" (click)="badInfo()" class="signinbtn" style="background-color:grey" >Login</button>
+      </div>
+
+      <ng-template #buttonOk>
+        <button type="submit" (click)="submit(user)"  class="signinbtn" >Login</button>
+      </ng-template>
+
+    </div>
+
+    <div id="alert-bad">
+      <strong>Attention!</strong> Enter all user data!
+    </div>
+
+    <div id="alert-good">
+      <strong>Success!</strong> You are authorized! This window will close automatically.
+    </div>
+
+    <div id="alert-inv">
+      <strong>Warning!</strong> Invalid email or password.
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" (click)="clearInput()" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div id="id00" class="modal">
+  <form class="modal-content animate">
+    <div class="imgcontainer">
+      <span (click)="clearInput()" onClick='location.href="/"' class="close" title="Close">&times;</span>
+    </div>
+
+    <div class="container">
+      <label for="email"><b>Email</b></label>
+      <input type="text" autocomplete="off" placeholder="Enter Email" name="uname" [(ngModel)]="user.email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" autocomplete="off" placeholder="Enter Password" name="psw" [(ngModel)]="user.password" required>
+
+      
+      <div *ngIf="user.email == '' || user.password == '';else buttonOk">
+        <button type="submit" (click)="badInfo()" class="signinbtn" style="background-color:grey" >Login</button>
+      </div>
+
+      <ng-template #buttonOk>
+        <button type="submit" (click)="submit(user)"  class="signinbtn" >Login</button>
+      </ng-template>
+
+    </div>
+
+    <div id="alert-bad-2">
+      <strong>Attention!</strong> Enter all user data!
+    </div>
+
+    <div id="alert-good-2">
+      <strong>Success!</strong> You are authorized! This window will close automatically.
+    </div>
+
+    <div id="alert-inv-2">
+      <strong>Warning!</strong> Invalid email or password.
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" (click)="clearInput()" class="cancelbtn" onClick='location.href="/"'>Cancel</button>
+    </div>
+  </form>
+</div>

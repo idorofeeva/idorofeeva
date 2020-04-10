@@ -1,0 +1,58 @@
+<div class="header-button-block" *ngIf="token">
+    <button onclick="document.location='user/'">{{currentUser.firstName}}</button>
+    <button onclick="document.getElementById('id04').style.display='block'">Add post</button>
+    <button onclick="document.location='/'">News</button>
+    <button (click)="logout()" class="logout">Logout ({{currentUser.firstName}})</button>
+    <!-- onclick="document.location='/'" -->
+</div>
+
+<div class="header-button-block-auth" *ngIf="token==null">
+  <app-auth></app-auth>
+  <app-registration></app-registration> 
+</div> 
+
+<div id="id04" class="modal">
+  <form #imageForm=ngForm id="newPost" class="modal-content animate" action="/action_page.php">
+    <span (click)="clearInput()" onclick="document.getElementById('id04').style.display='none'" class="close" title="Close">&times;</span>
+    <div class="container">
+      <h1>Add post</h1>
+      <p>Please fill in this form to create a post.</p>
+      <hr>
+      <label for="title"><b>Title</b></label>
+      <input type="text" autocomplete="off" placeholder="Enter title" name="title" [(ngModel)]="post.title" required>
+
+      <label for="tags"><b>Tags</b></label>
+      <input type="text" autocomplete="off" placeholder="Enter tags" name="tags" [(ngModel)]="post.tags" required>
+
+      <label for="text"><b>Text</b></label>
+      <!-- <input type="text" autocomplete="off" placeholder="Enter text" name="text" [(ngModel)]="post.text" required> -->
+
+      <textarea autocomplete="off" placeholder="Enter text" name="text" [(ngModel)]="post.text" cols="40" rows="5"></textarea>
+
+      <img [src]='imageUrl' style="width:30%; height:30%">
+      <input #fileInput type="file" [(ngModel)]="fileInputValue" (change)="selectImage($event)" (change)="handleFileInput($event.target.files)" class="file-upload" name="image" required>
+
+        <div *ngIf="post.title == '' || post.tags == '' || post.text == '' || file == null;else buttonOk">  
+          <button type="submit" (click)="badInfo()" style="background-color:grey" class="createbtn">Add post</button>
+        </div>
+      
+        <ng-template #buttonOk>
+          <button type="submit" (click)="submit(post, currentUser.id)" class="createbtn" >Add post</button>
+        </ng-template>
+    </div>
+
+    <div id="alert-bad-head">
+      <strong>Attention!</strong> Enter all post data!
+    </div>
+
+    <div id="alert-good-head">
+      <strong>Success!</strong> You are awesome! This window will close automatically.
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" (click)="clearInput()" onclick="document.getElementById('id04').style.display='none'" style="width:auto" class="cancelbtn">Cancel</button>
+    </div>
+
+  </form>
+</div>
+

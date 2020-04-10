@@ -1,0 +1,98 @@
+<div class="user-info">
+  <div class="user-info__card">
+    <div *ngFor="let user of users">
+      <div *ngIf="user.id==id && isUser==true">
+        <img [src]="user.image" alt="Avatar" style="width:100%">
+        <div class="container">
+          <h4><b>{{user.firstName}} {{user.lastName}}</b></h4> 
+          <p>{{user.email}}</p> 
+        </div>
+      </div> 
+    </div>
+    <div *ngIf="isUser==false">
+      <img [src]="currentUser.image" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>{{currentUser.firstName}} {{currentUser.lastName}}</b></h4> 
+        <p>{{currentUser.email}}</p> 
+      </div>
+      <button type="button" onclick="document.getElementById('id05').style.display='block'" class="updatebtn">Update information</button>
+    </div>
+  </div>
+
+  <div class="user-info__news">
+    <div *ngFor="let user of users" class="user-info__news-block">
+      <div *ngIf="user.id==id && isUser==true">
+        <div *ngFor="let item of user.news">
+          <div class="news-block__item">   
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{item.title}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+                <p>{{item.tags}}</p>
+                <div class="news-block__image">
+                  <img class="news-block__image-image" [src]="(returnImage + item.image) | sanitizer" alt="">
+                </div>
+                <p class="news-block__text">{{item.text}}</p>
+            </mat-expansion-panel> 
+          </div> 
+        </div>
+        <div *ngIf="user.news.length==0" class="no-news">This user has no posts.</div>
+      </div>
+    </div>
+    <div *ngIf="isUser==false">
+      <div *ngFor="let item of currentUser.news">
+        <div class="news-block__item">   
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{item.title}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+              <p>{{item.tags}}</p>
+              <div class="news-block__image">
+                <img class="news-block__image-image" [src]="(returnImage + item.image) | sanitizer" alt="">
+              </div>
+              <p class="news-block__text">{{item.text}}</p>
+          </mat-expansion-panel> 
+        </div> 
+      </div>
+      <div *ngIf="currentUser.news.length==0" class="no-news">You have no posts.</div>
+    </div>
+  </div>
+</div>
+
+<div id="id05" class="modal">
+  
+    <form class="modal-content animate">
+      <span (click)="clearInput()" onclick="document.getElementById('id05').style.display='none'" class="close" title="Close">&times;</span>
+      <div class="container">
+        <h1>Update</h1>
+        <p>Update information about yourself.</p>
+        <hr>
+        <label for="first-name"><b>First name</b></label>
+        <input type="text" autocomplete="off" [placeholder]="currentUser.firstName" [(ngModel)]="userData.firstName" name="fname">
+  
+        <label for="last-name"><b>Last name</b></label>
+        <input type="text" autocomplete="off" [placeholder]="currentUser.lastName" [(ngModel)]="userData.lastName" name="lname">
+  
+        <label for="password"><b>Password</b></label>
+        <input type="password" autocomplete="off" placeholder="Enter new password" [(ngModel)]="userData.password" name="password">
+  
+        <img [src]="imageUrl" style="width:30%; height:30%">
+        <input #fileInput type="file" [(ngModel)]="fileInputValue" (change)="selectImage($event)" (change)="handleFileInput($event.target.files)" class="file-upload" name="image" required>
+
+        <div class="button-block">
+          <button type="submit" (click)="submit(userData)" (click)="goodInfo()" class="signupbtn" >Update</button>
+          <button type="button" (click)="clearInput()" onclick="document.getElementById('id05').style.display='none'" class="cancelbtn">Cancel</button>
+        </div>
+
+      </div>
+      
+      <div id="alert-good-user">
+        <strong>Success!</strong> You are updated information about yourself! This window will close automatically.
+      </div>
+  
+    </form>
+  </div>

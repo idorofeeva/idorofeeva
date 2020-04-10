@@ -1,0 +1,30 @@
+    <h1>Greetings stranger</h1>
+<h2>News</h2>
+
+<div class="search-news">
+    <select [(ngModel)]="searchFilter" name="filter" id="search_options" class="news__select search-select btn btn-danger">
+        <option ngValue="all">all</option>
+        <option ngValue="author">author</option>
+        <option ngValue="tags">tags</option>
+        <option ngValue="title">title</option>
+    </select>
+    <input class="form-control" id="searchText" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for a new by tag or title or text">
+    <span (click)="clearSearchInput()" class="close" title="Close">&times;</span>
+</div>
+
+<div class="news-block">
+    <div *ngFor="let item of news | searchFilterSearch : searchFilter : searchText | paginate: { itemsPerPage: 3, currentPage: page }" class="news-block__item">
+        <h3 class="news-block__title">{{item.title}}</h3>
+        <p class="news-block__tags">{{item.tags}}</p>
+        <div class="news-block__image">
+            <img class="news-block__image-image" [src]="(returnImage + item.image) | sanitizer" alt="">
+        </div>
+        <p class="news-block__text">{{item.text}}</p>
+        <a href='/user/{{item.userId}}' (click)="authorId(item.userId)" class="news-block__author">Author: {{item.author.firstName}} {{item.author.lastName}}</a>
+    </div>    
+</div>
+
+<div class="pagination">
+    <pagination-controls (pageChange)="page = $event" class="pagination"></pagination-controls>
+</div>
+
